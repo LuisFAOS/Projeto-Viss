@@ -62,5 +62,6 @@ export const styles = StyleSheet.create({
     func_label:{color: 'white', fontSize: 20, marginTop: 10}
 
     
+
   });
   

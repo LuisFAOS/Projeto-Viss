@@ -9,6 +9,7 @@ import Logo from '../../assets/logo.png'
 
 export default function Login() {
   return (
+
     <LinearGradient colors={['black', 'green']} style={styles.global_container}>
 
 
@@ -40,7 +41,7 @@ export default function Login() {
             <View style={styles.func_labels}>
                 <Text style={styles.func_label}>ESQUECEU A SENHA?</Text>
                 <Text style={styles.func_label}>LEMBRAR-ME? 
-                <CheckBox color="primary"/>
+                <CheckBox color="secondary"/>
             </Text>
             </View>
             </View>
