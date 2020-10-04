@@ -49,7 +49,43 @@ module.exports={
     },
     logout(req, res){
         res.status(200).send({})
+    },
+    async user_datas(req, res){
+        try {
+            const token = req.headers['authorization']
+            const result_user_datas = await call_by_id(token, 'find_user_by_id')
+            res.status(200).send(result_user_datas)
+        } catch (e) {
+            res.status(500).send(`[erro ao pegar informações do usuário]: 
+                ${e}`)
+        }
+    },
+    async update_user_datas(req, res){
+        try {
+            
+        } catch (e) {
+            
+        }
+    },
+    async delete_account(req, res){
+        try {
+            const token = req.headers['authorization']
+            await call_by_id(token, 'delete_user')
+            res.status(200).send('conta deletada!')
+        } catch (e) {
+            res.status(500).send(`[erro ao deletar a conta]: 
+                ${e}`)
+        }
+    },
+    async make_report(req, res){
+
     }
+}
+
+await function call_by_id(token, func){
+    const {user} = await JWT.return_token_data(token)
+    const result_user_query = await user_models[func](user.id)
+    return result_user_query
 }
 
             
