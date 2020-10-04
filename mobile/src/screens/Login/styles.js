@@ -1,67 +1,50 @@
-import { StyleSheet } from 'react-native'
+import styled from 'styled-components/native';
+import { LinearGradient } from 'expo-linear-gradient'
 
-export const styles = StyleSheet.create({
-    global_container:{
-      backgroundColor: 'black',
-      width: '100%',
-      height: '100%',
-    },
-    inputs_container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    input_box: {
-      width: '80%',
-      marginHorizontal: '10%',
-      marginBottom:20
-    },
-    input: {
-        height: 40,
-        borderRadius: 10,
-        padding: 5,
-        backgroundColor: 'white',
-    },
-    label:{
-      fontSize: 23,
-      marginBottom: 5,
-      color: 'white',
-    },
+export const Container = styled(LinearGradient)`
+  width: 100%;
+  height: 100%;
+`
 
-    logo:{
-      width: '55%',
-      height: 240,
-      marginHorizontal: '22.5%',
-      marginTop: 60,
-      marginBottom:40,
-    },
+export const Logo = styled.Image`
+  width: 180;
+  height: 180;
+  align-self: center;
+  margin-top: 100;
+  margin-bottom: 60;
+`
 
-    button:{
-      backgroundColor:'#41BD1B',
-      width: '60%',
-      marginHorizontal: '20%',
-      height: 50,
-      borderRadius: 10,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop:20
-    },
+export const Button = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
 
-    button_text:{
-      color: 'white',
-      fontSize: 22
-    },
+  height: 40;
+  margin: 10px 50px;
 
-    func_labels: {
-      alignSelf: 'flex-start', 
-      alignItems: 'center', 
-      width:'100%' , 
-      marginTop: 20
-    },
+  background-color: #41BD1B;
+  border-radius: 2;
+`
 
-    func_label:{color: 'white', fontSize: 20, marginTop: 10}
+export const ButtonText = styled.Text`
+  color: white;
+  font-size: 20px;
+`
 
-    
+export const TipsContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin: -5px 30px 15px 30px;
+`
 
-  });
-  
+export const TipsText = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+`
+
+export const ContainerCheckBox = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+`

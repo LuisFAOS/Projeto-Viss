@@ -1,52 +1,64 @@
-import React from 'react';
-import { Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
-import { styles } from './styles'
+import React, { useState } from 'react';
+import { 
+    Container, 
+    Logo,
+    Button,
+    ButtonText,
+    TipsContainer,
+    TipsText,
+} from './styles'
 
-import {LinearGradient} from 'expo-linear-gradient'
-import CheckBox from '@material-ui/core/Checkbox'
+import { 
+    Text, 
+    KeyboardAvoidingView, 
+    Keyboard, 
+    TouchableWithoutFeedback
+} from 'react-native'
 
-import Logo from '../../assets/logo.png'
+import LogoImg from '../../assets/logo.png'
+import CheckBox from '../../components/Checkbox/Checkbox'
 
-export default function Login() {
+import InputBox from '../../components/InputBox/InputBox'
+
+export default function Login({ navigation }) {
+    const [isSelected, setIsSelected] = useState(true)
+
   return (
+    
+    <Container colors={['black', 'green']}>
+        <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+            <KeyboardAvoidingView behavior='position'>
 
-    <LinearGradient colors={['black', 'green']} style={styles.global_container}>
+                <Logo source={LogoImg}/>
 
+                <InputBox placeholder="Login" iconName="person" size={35}/>
+                <InputBox placeholder="Senha" iconName="vpn-key" size={35} secureTextEntry/>
 
-            <Image style={styles.logo} source={Logo}/>
-
-            <View style={styles.container}>
-
-            <View style={styles.input_box}>
-                <Text style={styles.label}>EMAIL:</Text>
-                <TextInput style={styles.input}/>
-            </View>
-
-            <View style={styles.input_box}>
-                <Text style={styles.label}>SENHA: </Text>
-                <TextInput style={styles.input}/>
-            </View>
-
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.button_text}>
-                    ENVIAR
-                </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.button_text}>
-                    CADASTRAR
-                </Text>
-            </TouchableOpacity>
-            <View style={styles.func_labels}>
-                <Text style={styles.func_label}>ESQUECEU A SENHA?</Text>
-                <Text style={styles.func_label}>LEMBRAR-ME? 
-                <CheckBox color="secondary"/>
-            </Text>
-            </View>
-            </View>
-
-    </LinearGradient>
+                <TipsContainer>
+                    <TipsText>
+                        <CheckBox
+                            selected={isSelected} 
+                            onPress={()=> setIsSelected(!isSelected)}
+                            text='Lembrar-me!'
+                        />
+                    </TipsText>
+                    <TipsText>
+                        <Text style={{color: 'white'}}>Esqueceu a senha?</Text>
+                    </TipsText>
+                </TipsContainer>
+                <Button>
+                    <ButtonText>
+                        ENTRAR
+                    </ButtonText>
+                </Button>
+                <Button onPress={()=> navigation.replace('SingUp')}>
+                    <ButtonText>
+                        CADASTRAR
+                    </ButtonText>
+                </Button>
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+    </Container>
 
   );
 }
