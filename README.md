@@ -1,2 +1,2 @@
-# TCC-viss
-Projeto para o tcc. Tem como foco mostrar áreas de risco quando o usuário traçar rotas
+# Projeto Viss
+README virá após o termino do projeto
