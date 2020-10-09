@@ -4,7 +4,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import {
     Container,
-    WrapperMenu
+    WrapperMenu,
+    Logo
 } from './styles'
 
 export default function Hearder(props){
@@ -14,11 +15,11 @@ export default function Hearder(props){
             <WrapperMenu onPress={props.Pressed}>
                 <MaterialIcons 
                     name="menu" 
-                    size={40} 
-                    color="white"
+                    size={45} 
+                    color="black"
                 />
             </WrapperMenu>
-            
+            <Logo source={require('../../assets/logo.png')}/>
         </Container>
     )
 }
