@@ -20,7 +20,7 @@ export default function DrawerRoutes(){
         >
 
             <Drawer.Screen 
-                name="Home" 
+                name="Inicio" 
                 component={Home}
                 options={{
                     drawerIcon: ({ color, size }) =>(
