@@ -1,2 +1,2 @@
 # Projeto Viss
-README virá após o termino do projeto
+README virá após o término do projeto.
