@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Welcomes = styled.ScrollView`
-    background: white;
+    background: rgb(217, 242, 209);
 `
 
 export const Image = styled.Image`
@@ -12,18 +12,18 @@ export const Image = styled.Image`
 export const ContainerImage = styled.View`
     align-items: center;
     
-    padding: 20px;
+    padding: 30px 20px 20px 20px;
 
     background: white;
 `
 
 export const Title = styled.Text`
-    font-size: 35px;
+    font-size: 50px;
     font-family: 'BebasTitle';
     text-align: center;
-    color: rgb(58, 173, 71);
-
-    padding: 30px 0px;
+    line-height: 45px;
+    
+    padding-top: 50px;
 
 `
 
@@ -32,17 +32,25 @@ export const Description = styled.View`
     flex-wrap: wrap;
     justify-content: space-between;
     
-    padding: 0px 25px; 
+    padding: 10px 30px;
+
+    background-color: whitesmoke;
+    border: 1px gainsboro;
+    border-bottom-width: 0px;
+    border-color: gainsboro;
+    
+    border-top-left-radius: 60px; 
+    border-top-right-radius: 60px; 
 `
 
 export const Card = styled.View`
     align-items: center;
-    
+
     height: 200px;
     width: 45%;
-
-    background: white;
     margin: 20px 0px;
+
+    background-color: whitesmoke;
     
     text-align: center;
     border-radius: 2px;
@@ -53,10 +61,33 @@ export const Card = styled.View`
 
 export const CardTitle = styled.Text`
     font-family: 'NanumDesc';
-    font-size: 16px;
     text-align: center;
-    color: black;
+    font-size: 17px;
+    
+    font-weight: bold;
 
     margin-top: 10px;
 
+`
+
+export const CardDesc = styled.Text`
+    text-align: center;
+    font-size: 11px;
+
+    padding: 6px;
+    margin-top: 8px;
+
+`
+
+export const IntroductionImage = styled.Image`
+    width: 100%;
+    height: 290;
+    align-self: center;
+    margin-bottom: 20px;
+`
+
+export const Label = styled.Text`
+    text-align: center;
+    font-family: 'NanumDesc';
+    font-size: 25px;
 `
