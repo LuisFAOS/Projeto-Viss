@@ -16,7 +16,7 @@ export default function MyDrawer(props){
                 <FontAwesome name="user-circle-o" size={90} color="white" />                
                 <Label>Silton Mantos</Label>
             </Wrapper>
-            <DrawerItemList {...props} activeTintColor="green"/>
+            <DrawerItemList {...props} activeTintColor="#41BD1B"/>
         </DrawerContentScrollView>
     )
 }

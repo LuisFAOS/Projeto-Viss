@@ -2,13 +2,15 @@ import React from 'react'
 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
+import { Text } from 'react-native'
+
 import {
     Container,
     WrapperMenu,
-    Logo
+    ActivedPage
 } from './styles'
 
-export default function Hearder(props){
+export default function Header(props){
 
     return(
         <Container>
@@ -19,7 +21,7 @@ export default function Hearder(props){
                     color="black"
                 />
             </WrapperMenu>
-            <Logo source={require('../../assets/logo.png')}/>
+            <MaterialIcons name="home" size={40} color="black" style={{marginRight: 25}}/>
         </Container>
     )
 }

@@ -3,12 +3,13 @@ import styled from 'styled-components'
 export const Container = styled.View`
     flex-direction: row;
     justify-content: space-between; 
+    align-items: center;
 
     background: whitesmoke;
 
     height: 70px;
     border-bottom-width: 1px;
-    border-bottom-color: gray;
+    border-bottom-color: #D3D3D3;
     padding: 10px;
 `
 
@@ -18,8 +19,9 @@ export const WrapperMenu = styled.TouchableOpacity`
     height: 45px;
 `
 
-export const Logo = styled.Image`
-    height: 45;
-    width: 45;
+export const ActivedPage = styled.Text`
+    font-size: 20px;
+    font-weight: bold;
+
     margin-right: 25px;
 `
