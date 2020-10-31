@@ -1,89 +1,101 @@
-import React from 'react'
-import { useFonts } from 'expo-font';
+import React,{ useState } from 'react'
+import RobotoFontLoader from '../../FontConfig/RobotoFontConfig';
+
 
 import Header from '../../components/Header/Header'
-import { useIsDrawerOpen } from '@react-navigation/drawer'
 import {
     Welcomes,
-    Image,
     IntroductionImage,
     Title, 
     Description,
-    Card,
-    CardTitle,
-    CardDesc,
-    Label
+    ContainerBolls,
+    NavigationCircle,
+    ContainerButton,
+    Button
 } from './styles'
 import { MaterialIcons } from '@expo/vector-icons'
-import { FontAwesome5 } from '@expo/vector-icons'; 
-import { Text } from 'react-native';
 
-export default function Home({ navigation }){
+export default function Home({ navigation}){
 
-    const [loaded] = useFonts({
-        BebasTitle: require('../../assets/fonts/BebasNeue-Regular.ttf'),
-        NanumDesc: require('../../assets/fonts/NanumGothic-Regular.ttf')
-    });
-    
-      if (!loaded) {
-          console.log('não esta carregandao')
-        return null;
-      }
-
-    const isDrawerOpen = useIsDrawerOpen()
-
-    const ShowDrawer = () => {
-        if(!isDrawerOpen){
-            navigation.openDrawer();
+    const Contents= [
+        {
+            title: "Insira boletins de ocorrências",
+            description: "Com o pdf ou imagem do seu B.O, você pode fazer o "+
+                        "registro no site e ajudar sua vizinhança!"
+        },
+        {
+            title: "Consulte boletins de ocorrência",
+            description: "Fique por dentro da QTD. de registro que seu "+
+                        "bairro, ou rua, possui"
+        },
+        {
+            title: "Sistema de notificação",
+            description: "Notificaremos a QTD. de B.O's. que o bairro, ou rua, "+
+                        "que você passou, possui."
+        },
+        {
+            title: "Traçe rotas de outra maneira",
+            description: "Junto com as ruas que você passará, terá também a "+ 
+                        "QTD. de B.O's. da mesma."
         }
+    ]
+
+    //State
+
+    const [ActivedContentIndice, setActivedContentIndice] = useState(0)
+
+    const PreviousPage = indice => {
+        const newIndice = indice-1 < 0 ? 3 : indice-1
+
+        setActivedContentIndice(newIndice)
+    } 
+
+    const NextPage = indice => {
+        const newIndice = indice+1 > 3 ? 0 : indice+1
+
+        setActivedContentIndice(newIndice)
     }
+
+    //Fonts configurantion
+
+    RobotoFontLoader()
+
+
+    // View code
 
     return(
         <>
-            <Header Pressed={ShowDrawer} page="Verificar Segurança"/>
+            <Header navigation={navigation} page="Verificar Segurança"/>
             <Welcomes>
-                <Title>{"BEM VINDO\nAO VISS!"}</Title>
-                <IntroductionImage source={require('../../assets/homeImgs/welcome3.png')}/>
+                <IntroductionImage display={ActivedContentIndice == 0} source={require(`../../assets/homeImgs/homeImg0.png`)}/>
+                <IntroductionImage display={ActivedContentIndice == 1} source={require(`../../assets/homeImgs/homeImg1.png`)}/>
+                <IntroductionImage display={ActivedContentIndice == 2} source={require(`../../assets/homeImgs/homeImg2.png`)}/>
+                <IntroductionImage display={ActivedContentIndice == 3} source={require(`../../assets/homeImgs/homeImg3.png`)}/>
 
-                <Label>Nossos serviços</Label>
+                <Title>{Contents[ActivedContentIndice].title}</Title>
                 <Description>
-                   <Card>
-                        <CardTitle>Insira B.O's</CardTitle>
-                        <MaterialIcons name="create" size={35} color="#41BD1B" style={{marginTop: 12}}/>
-                        <CardDesc>
-                            Para inserir um B.O, você tem que 
-                            ter o PDF/imagem do mesmo!
-                        </CardDesc>
-                    </Card>
-                   <Card>
-                        <CardTitle>Consulte B.O's</CardTitle>
-                        <FontAwesome5 name="sistrix" size={35} color="#41BD1B" style={{marginTop: 12}}/>
-                        <CardDesc>
-                            Consulte a quantidade de B.O's nas
-                            ruas em que deseja, através de
-                            gráficos e etc!
-                        </CardDesc> 
-
-                    </Card>
-                   <Card>
-                        <CardTitle>Notificações</CardTitle>
-                        <FontAwesome5 name="bell" size={35} color="#41BD1B" style={{marginTop: 12}}/>
-                        <CardDesc>
-                            Notificaremos quando você estiver
-                            em locais onde Qtd. de B.O's 
-                            forem acima da média!
-                        </CardDesc> 
-
-                    </Card>
-                   <Card>
-                        <CardTitle>Traçe Rotas</CardTitle>
-                        <FontAwesome5 name="route" size={35} color="#41BD1B" style={{marginTop: 12}}/>
-                        <CardDesc>
-                            Veja a Qtd. de B.O's nas ruas em que
-                            você passará após traçar o trajeto!
-                        </CardDesc>
-                    </Card>
+                    {Contents[ActivedContentIndice].description}
                 </Description>
+                <ContainerBolls>
+                    <NavigationCircle color={ActivedContentIndice == 0 ? "#41BD1B" : "gray"}/>
+                    <NavigationCircle color={ActivedContentIndice == 1 ? "#2F2E41" : "gray"}/>
+                    <NavigationCircle color={ActivedContentIndice == 2 ? "#41BD1B" : "gray"}/>
+                    <NavigationCircle color={ActivedContentIndice == 3 ? "#2F2E41" : "gray"}/>
+                </ContainerBolls>
+                <ContainerButton>
+                    <Button onPress={()=> PreviousPage(ActivedContentIndice)}>
+                        <MaterialIcons 
+                            name="keyboard-arrow-left"
+                            size={65} 
+                            color="#2F2E41"/>
+                    </Button>
+                    <Button onPress={() => NextPage(ActivedContentIndice)}>
+                        <MaterialIcons 
+                            name="keyboard-arrow-right"
+                            size={65} 
+                            color="#2F2E41"/>
+                    </Button>
+                </ContainerButton>
             </Welcomes>
         </>
     )

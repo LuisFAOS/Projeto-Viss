@@ -1,93 +1,74 @@
+import { Dimensions } from 'react-native'
 import styled from 'styled-components'
 
 export const Welcomes = styled.ScrollView`
-    background: rgb(217, 242, 209);
-`
-
-export const Image = styled.Image`
-    width: 250;
-    height: 250;
-`
-
-export const ContainerImage = styled.View`
-    align-items: center;
-    
-    padding: 30px 20px 20px 20px;
-
     background: white;
 `
 
-export const Title = styled.Text`
-    font-size: 50px;
-    font-family: 'BebasTitle';
-    text-align: center;
-    line-height: 45px;
-    
-    padding-top: 50px;
-
-`
-
-export const Description = styled.View`
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    
-    padding: 10px 30px;
-
-    background-color: whitesmoke;
-    border: 1px gainsboro;
-    border-bottom-width: 0px;
-    border-color: gainsboro;
-    
-    border-top-left-radius: 60px; 
-    border-top-right-radius: 60px; 
-`
-
-export const Card = styled.View`
-    align-items: center;
-
-    height: 200px;
-    width: 45%;
-    margin: 20px 0px;
-
-    background-color: whitesmoke;
-    
-    text-align: center;
-    border-radius: 2px;
-    border: 1px solid gainsboro;
-
-    elevation: 1;
-`
-
-export const CardTitle = styled.Text`
-    font-family: 'NanumDesc';
-    text-align: center;
-    font-size: 17px;
-    
-    font-weight: bold;
-
-    margin-top: 10px;
-
-`
-
-export const CardDesc = styled.Text`
-    text-align: center;
-    font-size: 11px;
-
-    padding: 6px;
-    margin-top: 8px;
-
-`
+const DEVICE_WIDTH = Dimensions.get("screen").width-40
 
 export const IntroductionImage = styled.Image`
-    width: 100%;
-    height: 290;
+    display: ${props => props.display ? "flex" : "none"};
     align-self: center;
-    margin-bottom: 20px;
+
+    width: 100%;
+    height: ${DEVICE_WIDTH < 290 ? 290 : DEVICE_WIDTH};
+    margin-top: 5px;
+    margin-bottom: 25px;
 `
 
-export const Label = styled.Text`
+export const Title = styled.Text`
+    font-size: 22px;
+    font-family: 'RobotoMedium';
+    color: #41BD1B;
     text-align: center;
-    font-family: 'NanumDesc';
-    font-size: 25px;
+
+    padding: 15px;
+    padding-top: 0px;
+
+`
+
+export const Description = styled.Text`
+    font-size: 14px;
+    font-family: 'RobotoLight';
+    color: gray;
+    text-align: center;
+
+    padding: 0px 20px;
+`   
+
+export const ContainerBolls = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90px;
+
+    margin: 35px 0px;
+
+    align-self: center;
+`
+
+export const NavigationCircle = styled.View`
+    width: 15px;
+    height: 15px;
+    background-color: ${props => props.color};
+
+    border-radius: 8px;
+`
+
+export const ContainerButton = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 30px;
+`
+
+export const Button = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+
+    width: 70px;
+    height: 70px;
+
+    background-color: #41BD1B;
+
+    border-radius: 40px;
 `

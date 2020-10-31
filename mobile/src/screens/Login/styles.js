@@ -1,9 +1,11 @@
-import styled from 'styled-components/native';
+import styled,{ css } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient'
+
 
 export const Container = styled(LinearGradient)`
   width: 100%;
   height: 100%;
+  z-index: 0;
 `
 
 export const Logo = styled.Image`
@@ -33,7 +35,7 @@ export const ButtonText = styled.Text`
 export const TipsContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin: -5px 30px 15px 30px;
+  margin: 15px 30px 15px 30px;
 `
 
 export const TipsText = styled.View`
@@ -41,6 +43,7 @@ export const TipsText = styled.View`
   justify-content: center;
   align-items: center;
 
+  font-family: 'RobotoMedium';
   font-size: 14px;
 `
 

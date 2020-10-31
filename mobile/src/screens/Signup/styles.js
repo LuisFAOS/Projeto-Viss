@@ -8,20 +8,16 @@ export const Container = styled(LinearGradient)`
 `
 
 export const ChangePageButton = styled.TouchableOpacity`
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  align-self: ${props => props.page === 'first' ? 'flex-end' : 'flex-start'};
+  margin: 20px 10px 30px 15px;
 
-  height: 60;
-  width: 60;
-  margin: ${props => props.page === 'second' ? '10px 20px 10px 40px' : '10px 40px'};
-
-  background-color: #41BD1B;
-  border-radius: 30;
+  width: 200px;
 `
 
 export const ArrowIcon = styled(MaterialIcons)`
   color: white;
+  margin-left: 5px;
 `
 
 export const ButtonContainer = styled.View`
@@ -36,4 +32,11 @@ export const ButtonContainer = styled.View`
 
   width: 100%;
   height: 100%;
+`
+
+export const HeaderTitle = styled.Text`
+  color: white;
+
+  font-size: 18px;
+  margin-left: 5px;
 `
