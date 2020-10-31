@@ -6,6 +6,7 @@ const cors= require('cors')
 const rota_usuario = require('../routes/rota_usuario')
 const rota_rua = require('../routes/rota_rua')
 const rota_registro = require('../routes/rota_registro')
+require('dotenv').config()
 
 app.use(cors())
 app.use(bodyparser.urlencoded({extended: false}))
