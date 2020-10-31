@@ -1,69 +1,32 @@
-import React from 'react'
+import React,{ useContext} from 'react'
 
-import Home from '../../screens/Home/Home'
+import Profile from '../../screens/Profile/UserDatas/UserDatas'
 /* import Collection from '../../views/Collection/Collection'
 import Item from '../../views/Item/Item'
 import Profile from '../../views/Profile/Profile' */
 import MyDrawer from './MyDrawer/MyDrawer'
 
-import { MaterialIcons } from '@expo/vector-icons'
-import { FontAwesome5 } from '@expo/vector-icons'; 
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import TabRoutes from '../TabRoutes/TabRoute'
+import { UserDatasContext } from '../../context/context'
 
-const Drawer = createDrawerNavigator();
 
-export default function DrawerRoutes(){
+export default function DrawerRoutes(props){
+    
+    const Drawer = createDrawerNavigator();
+    const AuthDatas = useContext(UserDatasContext)
+
     return(
-        <Drawer.Navigator
-            drawerContent={MyDrawer}
-        >
-
-            <Drawer.Screen 
-                name="Inicio" 
-                component={Home}
-                options={{
-                    drawerIcon: ({ color, size }) =>(
-                        <MaterialIcons name="home" size={size} color={color}/>
-                    )
-                }}    
-            />
-            <Drawer.Screen 
-                name="Fazer B.O" 
-                component={Home}
-                options={{
-                    drawerIcon: ({ color, size }) =>(
-                        <MaterialIcons name="create" size={size} color={color}/>
-                    )
-                }}  
-            />
-            <Drawer.Screen  
-                name="Verificar Segurança" 
-                component={Home}
-                options={{
-                    drawerIcon: ({ color, size }) =>(
-                        <MaterialIcons name="security" size={size} color={color}/>
-                    )
-                }}  
-            />
-            <Drawer.Screen 
-                name="Traçar Rotas" 
-                component={Home}
-                options={{
-                    drawerIcon: ({ color, size }) =>(
-                        <FontAwesome5 name="route" size={size} color={color} />
-                    )
-                }}  
-            />
-            <Drawer.Screen  
-                name="Perfil" 
-                component={Home}
-                options={{
-                    drawerIcon: ({ color, size }) =>(
-                        <MaterialIcons name="person" size={size} color={color}/>
-                    )
-                }}  
-            />
-        </Drawer.Navigator>
+            <Drawer.Navigator
+                drawerContent={() => <MyDrawer AuthDatas={AuthDatas} {...props}/>}
+            >
+                <Drawer.Screen 
+                    name="Inicio" 
+                    component={TabRoutes}
+                    options={{unmountOnBlur: false,
+                        swipeEnabled: false,}}
+                />
+            </Drawer.Navigator>
     );
 }

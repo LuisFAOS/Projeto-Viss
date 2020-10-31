@@ -19,9 +19,10 @@ export const WrapperMenu = styled.TouchableOpacity`
     height: 45px;
 `
 
-export const ActivedPage = styled.Text`
-    font-size: 20px;
+export const AppName = styled.Text`
+    font-size: 25px;
     font-weight: bold;
+    color: #2F2E41;
 
     margin-right: 25px;
 `

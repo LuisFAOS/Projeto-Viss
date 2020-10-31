@@ -2,26 +2,37 @@ import React from 'react'
 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
-import { Text } from 'react-native'
+import { useIsDrawerOpen } from '@react-navigation/drawer'
 
 import {
     Container,
     WrapperMenu,
-    ActivedPage
+    AppName
 } from './styles'
 
 export default function Header(props){
+    const isDrawerOpen = props.goBack || useIsDrawerOpen()
+    
+    const ShowDrawer = () => {
+
+        if(!isDrawerOpen){
+            props.navigation.openDrawer();
+        }
+    }
+
 
     return(
         <Container>
-            <WrapperMenu onPress={props.Pressed}>
+            <WrapperMenu onPress={props.goBack ? () => props.navigation.goBack() : () => ShowDrawer()}>
                 <MaterialIcons 
-                    name="menu" 
+                    name={props.goBack ? 'arrow-back' : 'menu'}
                     size={45} 
-                    color="black"
+                    color="#2F2E41"
                 />
             </WrapperMenu>
-            <MaterialIcons name="home" size={40} color="black" style={{marginRight: 25}}/>
+            <AppName>
+                Viss
+            </AppName>
         </Container>
     )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 
 import Login from '../../screens/Login/Login'
 import SingUp from '../../screens/SignUp/SingUp'
+import AppStackRoute from './AppStackRoute'
 
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -16,6 +17,15 @@ const LoginStackRoutes = () =>{
                 options={
                     { 
                         headerShown: false,
+                    }
+                }
+                />
+            <STACK.Screen 
+                name='Aplicação'
+                component={AppStackRoute} 
+                options={
+                    { 
+                        headerShown: false
                     }
                 }
                 />

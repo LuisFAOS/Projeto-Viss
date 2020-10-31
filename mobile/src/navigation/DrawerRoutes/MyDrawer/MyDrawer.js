@@ -1,22 +1,59 @@
-import React from 'react';
+import React from 'react'
 
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import {
     Wrapper,
-    Label
+    Label,
+    DrawerItemStyled,
+    DrawerSection,
+    DrawerContentScrollViewS,
+    FuncsTitle
 } from './styles'
 
+import { DrawerContentScrollView } from '@react-navigation/drawer'
 
-export default function MyDrawer(props){
+const MyDrawer = ({AuthDatas, navigation}) => {
+
+
     return (  
-        <DrawerContentScrollView {...props}>
+        <DrawerContentScrollViewS>
             <Wrapper source={require('../../../assets/drawer-background.jpg')}>
                 <FontAwesome name="user-circle-o" size={90} color="white" />                
-                <Label>Silton Mantos</Label>
+                <Label>{AuthDatas.user.name}</Label>
             </Wrapper>
-            <DrawerItemList {...props} activeTintColor="#41BD1B"/>
-        </DrawerContentScrollView>
+            <FuncsTitle>Perfil</FuncsTitle>
+                <DrawerSection>
+                    <DrawerItemStyled 
+                        activeTintColor="#41BD1B"
+                        onPress={()=> navigation.navigate('Meus Dados', {AuthDatas})}
+                        label="Meus Dados"
+                        icon={({color, size}) => (
+                            <MaterialCommunityIcons name="account-badge-horizontal-outline" size={size} color={color} />
+                        )}
+                    />
+                    <DrawerItemStyled 
+                        label="Minhas Rotas"
+                        icon={({color, size}) => (
+                            <MaterialCommunityIcons name="map-marker-distance" size={size} color={color}/>
+                        )}
+                    />
+                    <DrawerItemStyled
+                        label="Meus Registros"
+                        icon={({color, size}) => (
+                            <MaterialCommunityIcons name="comment-text-multiple-outline" size={size} color={color}/>
+                        )}
+                    />
+                    <DrawerItemStyled
+                        pos="ab"
+                        label="Sair"
+                        icon={({color, size}) => (
+                            <MaterialCommunityIcons name="logout" size={size} color={color} />
+                        )}
+                    />
+                </DrawerSection>
+        </DrawerContentScrollViewS>
     )
 }
+
+export default MyDrawer
