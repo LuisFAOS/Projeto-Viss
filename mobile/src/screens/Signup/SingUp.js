@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-import { StatusBar, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { 
+    TouchableWithoutFeedback, 
+    KeyboardAvoidingView, 
+    Keyboard, 
+    ScrollView, 
+    Platform} from 'react-native';
 import SplitPage from './SplitPage/SplitPage'
 
 import {Button, ButtonText} from '../../components/Button/styles'
@@ -12,8 +17,17 @@ import {
     HeaderTitle
 } from './styles'
 
+import * as ImagePicker from 'expo-image-picker'
+import baseURL from '../../baseURL';
+import DefaultProfileImg from '../../assets/userImgs/default-user-img2.png'
+import AlertModal from '../../components/AlertModal/AlertModal';
 
 export default function SingUp({navigation}){
+
+    const [alert, setAlert] = useState({
+        alertTxt: '',
+        isLoading:false,
+    })
 
     const [activePage, setActivePage] = useState({
         Page: {
@@ -32,6 +46,31 @@ export default function SingUp({navigation}){
         nome: '',
         CEP: '',
     })
+
+    const [imageUri, setImageUri] = useState(null)
+
+    React.useEffect(() => {
+        (async () => {
+          if (Platform.OS !== 'web') {
+            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if (status !== 'granted') {
+              alert('É necessário permitir o acesso a camera inserir uma foto!');
+            }
+          }
+        })();
+      }, []);
+
+    const selectPicture = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+          });
+      
+          
+          if (!result.cancelled) {
+            setImageUri(result);
+          }
+    }
 
     const ChangePageHandler = () => {    
         if(activePage.id === 'first'){
@@ -64,10 +103,85 @@ export default function SingUp({navigation}){
         newState[field] = value.nativeEvent.text
 
         setUserDatas({...newState})
+        
+    }
+
+    const createUserDatasForm = () => {
+        const UserDatasForm = new FormData();
+
+
+        if(imageUri){
+            const ImagefileName = imageUri.uri.split('/')
+    
+            UserDatasForm.append("avatar", {
+                name: ImagefileName[ImagefileName.length-1],
+                type: 'image/jpeg',
+                uri:
+                Platform.OS === "android" ? imageUri.uri : imageUri.uri.replace("file://", "")
+            });
+        }else return JSON.stringify({...UserDatas})
+
+        Object.keys(UserDatas).forEach(key => {
+            UserDatasForm.append(key, UserDatas[key]);
+        });
+
+        return UserDatasForm
+    }
+
+    const SendDatas = async () => {
+        try {
+            Keyboard.dismiss()
+
+            setAlert({
+                alertTxt: 'Carregando...',
+                isLoading:true,
+            })
+
+            const RouteChangerConfig = typeof createUserDatasForm() === "string" ? "/without_avatar" : ""
+
+            const response = await fetch(`${baseURL}user/sing_up${RouteChangerConfig}`, {
+                method: 'POST',
+                headers: RouteChangerConfig && {'Content-Type':'application/json'},
+                body: createUserDatasForm()
+            })
+            
+            let responseData;
+
+            if (response.status>=400) {
+                responseData = await response.text()
+
+                setAlert({
+                    alertTxt: responseData,
+                    isLoading: false
+                })
+
+            }else{
+                var AuthDatas = await response.json() 
+                navigation.navigate('Aplicação', {AuthDatas}) 
+            }
+            
+        } catch (e) {
+
+            setAlert({
+                alertTxt: 'Servidores com problema, perdão.',
+                isLoading: false
+            })
+
+            console.log("ERRO ENCONTRADO:\n"+e)
+        }
     }
 
     return (
         <Container colors={['black', 'green']}>
+            {
+                alert.alertTxt ? (
+                    <AlertModal
+                        pressed={() => !alert.isLoading && setAlert({alertTxt:'', isLoading: false})}
+                        isLoading={alert.isLoading}
+                        alertTxt={alert.alertTxt}
+                    />
+                ): <></>
+            }
             <KeyboardAvoidingView behavior='position'>
                 <ChangePageButton onPress={() => activePage.id === 'first' ? 
                     navigation.navigate('Login')
@@ -84,6 +198,8 @@ export default function SingUp({navigation}){
                 <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
                     <ScrollView>
                         <SplitPage 
+                            imageUri={imageUri && imageUri.uri}
+                            selectPicture={selectPicture}
                             title={activePage.Page.title}
                             firstInputValue={activePage.id === 'first' ? UserDatas.email : UserDatas.nome}
                             firstInputPlaceholder={activePage.Page.PlaceHolders[0]}
@@ -106,7 +222,7 @@ export default function SingUp({navigation}){
                                     />
                                 </Button>
                                 :
-                                <Button>
+                                <Button onPress={SendDatas}>
                                     <ButtonText>FINALIZAR</ButtonText>
                                 </Button>
                             }    

@@ -1,20 +1,28 @@
 import React from 'react';
 
-import LogoImg from '../../../assets/logo.png'
+import DefaultProfileImg from '../../../assets/userImgs/default-user-img2.png'
 import InputBox from '../../../components/InputBox/InputBox'
+import PasswordInput from '../../../components/PasswordInput/PasswordInput';
 
 import {
     Head,
     Title,
     Logo,
-    Container,
+    ChoosePictureText,
+    ChoosePictureContainer,
 } from './styles'
 
 export default function SplitPage(props){
+    
     return(
         <>
             <Head>
-                <Logo source={LogoImg}/>
+                {props.imageUri ? <Logo source={{uri:props.imageUri}}/> : <Logo source={DefaultProfileImg}/>}
+                <ChoosePictureContainer onPress={props.selectPicture}>
+                    <ChoosePictureText>
+                        {props.imageUri ? "Trocar imagem": "Escolher imagem"}
+                    </ChoosePictureText>  
+                </ChoosePictureContainer>
                 <Title>
                     {props.title}
                 </Title>
@@ -27,13 +35,21 @@ export default function SplitPage(props){
                 iconName={props.firstIconName} 
                 size={35}/>
 
-            <InputBox placeholder={props.secondInputPlaceholder} 
-                value={props.secondInputValue}
-                iconName={props.secondIconName}
-                onChange={props.secondInputChangeHandler}
-                size={35} 
-                secureTextEntry = {props.isPassword}/>
-  
+            {props.isPassword ? 
+                    <PasswordInput placeholder={props.secondInputPlaceholder} 
+                        value={props.secondInputValue}
+                        iconName={props.secondIconName}
+                        onChange={props.secondInputChangeHandler}
+                        size={35}
+                    />
+                :   <InputBox placeholder={props.secondInputPlaceholder} 
+                        value={props.secondInputValue}
+                        iconName={props.secondIconName}
+                        onChange={props.secondInputChangeHandler}
+                        size={35}/>
+                }
+
+            
         </>
     )
 } 

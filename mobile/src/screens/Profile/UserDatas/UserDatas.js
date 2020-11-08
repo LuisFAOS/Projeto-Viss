@@ -1,28 +1,23 @@
 import React,{ useState, useRef, useEffect } from 'react';
-import { Keyboard, KeyboardAvoidingView, Text } from 'react-native';
+import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import baseURL from '../../../baseURL';
+import AppInputBox from '../../../components/AppInputBox/AppInputBox';
 import { Button, ButtonText } from '../../../components/Button/styles';
 
 import Header from '../../../components/Header/Header';
-import InputBox from '../../../components/InputBox/InputBox'
 
 import { 
   Avatar,
   ButtonContainer,
   Circle,
   Container, 
-  InputContainer,
-  Input,
-  TextInputContainer, 
   Title, 
   Wrapper, 
-  TextInput
 } from './styles';
 
 
 function Profile({route, navigation}) {
 
-  console.log(route.params.AuthDatas.token)
 
   const [InputValues, setInputValues] = useState({
     nome: {
@@ -63,10 +58,6 @@ function Profile({route, navigation}) {
         }
       })
 
-      return () => {
-        console.log(UserDatas)
-      }
-
     } catch (e) {
       return () => {
         console.log("ERRO!"+e);
@@ -81,7 +72,6 @@ function Profile({route, navigation}) {
   const refInputName = useRef(null);
   const refInputCEP = useRef(null);
   const refInputEmail = useRef(null);
-
 
 
   const FocusStateHandler = field =>{
@@ -117,75 +107,26 @@ function Profile({route, navigation}) {
           <Title>
             Editar Dados
           </Title>
-          <InputContainer>
-            <Input 
-              ref={refInputName}
+          <AppInputBox
+            onChangeText={nome => StateValueHandler("nome", nome)}
+            value={InputValues.nome.value}
+            labelText="Nome"
+          />
 
-              onChangeText={nome => StateValueHandler("nome", nome)}
-              value={InputValues.nome.value}
+          <AppInputBox
+            onChangeText={CEP => StateValueHandler("CEP", CEP)}
+            value={InputValues.CEP.value}
 
-              onBlur= {() => BlurStateHandler('nome')}
-              onFocused={InputValues.nome.isFocused}/>
-            <TextInputContainer
-              onPress={() => {
-                  FocusStateHandler('nome')
-                  refInputName.current.focus()
-                }
-              }
-            >
-              <TextInput 
-                onFocused={InputValues.nome.isFocused}>
-                  Nome
-              </TextInput>
-            </TextInputContainer>
-          </InputContainer>
+            labelText="CEP"
+          />
 
-          <InputContainer>
-            <Input 
-              ref={refInputCEP}
-              
-              onChangeText={CEP => StateValueHandler("CEP", CEP)}
-              value={InputValues.CEP.value}
+          <AppInputBox
 
-              onBlur= {() => BlurStateHandler('CEP')}
-              onFocused={InputValues.CEP.isFocused}/>
-            <TextInputContainer
-              onPress={() => {
-                  FocusStateHandler('CEP')
-                  refInputCEP.current.focus()
-                }
-              }
-            >
-              <TextInput 
-                onFocused={InputValues.CEP.isFocused}>
-                  CEP
-              </TextInput>
-            </TextInputContainer>
-          </InputContainer>
+            onChangeText={email => StateValueHandler("email", email)}
+            value={InputValues.email.value}
 
-          <InputContainer>
-            <Input 
-              ref={refInputEmail}
-
-              onChangeText={email => StateValueHandler("email", email)}
-              value={InputValues.email.value}
-              
-              onBlur= {() => BlurStateHandler('email')}
-              onFocused={InputValues.email.isFocused}/>
-            <TextInputContainer
-              onPress={() => {
-                  FocusStateHandler('email')
-                  refInputEmail.current.focus()
-                }
-              }
-            >
-              <TextInput 
-                onFocused={InputValues.email.isFocused}>
-                  Email
-              </TextInput>
-            </TextInputContainer>
-          </InputContainer>
-
+            labelText="Email"
+          />
 
           <ButtonContainer>
             <Button>

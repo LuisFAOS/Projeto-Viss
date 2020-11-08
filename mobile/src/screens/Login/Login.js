@@ -25,28 +25,9 @@ import CheckBox from '../../components/Checkbox/Checkbox'
 import InputBox from '../../components/InputBox/InputBox'
 import AlertModal from '../../components/AlertModal/AlertModal';
 import baseURL from '../../baseURL';
+import PasswordInput from '../../components/PasswordInput/PasswordInput';
 
 export default function Login({ navigation }) {
-
-    const spinValue = new Animated.Value(0);
-
-    Animated.loop(
-        Animated.timing(
-          spinValue,
-          {
-           toValue: 1,
-           duration: 200,
-           easing: Easing.linear,
-           useNativeDriver: true
-          }
-        )
-       ).start();       
-
-    // Next, interpolate beginning and end values (in this case 0 and 1)
-    const spin = spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg']
-    })
 
     const [isSelected, setIsSelected] = useState(true)
     
@@ -70,19 +51,22 @@ export default function Login({ navigation }) {
             })
             const response = await fetch(baseURL+'user/login', {
                 method: 'POST',
-                headers: login
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(login)
             })
-            if (response.status >= 400) {
-                var AuthDatas = await response.text()
-                setAlert({
-                    alertTxt: 'Email/senha inválido(s)!',
-                    isLoading: false
-                })
-            }
+
+            if (response.status >= 400) var AuthError = 'Email/senha inválido(s)!'
+        
             else {
                 var AuthDatas = await response.json() 
                 navigation.navigate('Aplicação', {AuthDatas}) 
             }
+
+            setAlert({
+                alertTxt: AuthError,
+                isLoading: false
+            })
+            
         } catch (e) {
 
             setAlert({
@@ -105,7 +89,6 @@ export default function Login({ navigation }) {
                     alertTxt={alert.alertTxt}
                 />
             ): <></>
-
         }
         <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
             <KeyboardAvoidingView behavior='position'>
@@ -120,12 +103,10 @@ export default function Login({ navigation }) {
                     onChangeText={email => setLogin({email, senha: login.senha})}
                     value={login.email}
                 />
-                <InputBox 
+                <PasswordInput 
                     placeholder="Senha" 
                     iconName="vpn-key" 
-                    size={35} 
-                    secureTextEntry
-                    
+                    size={35}                     
                     onChangeText={senha => setLogin({email: login.email, senha})}
                     value={login.senha}
                     />
