@@ -37,6 +37,7 @@ export const AlertModalLogin = styled.View`
 export const ModalLabel = styled.Text`
     padding: 10px;
     font-size: 18px;
+    text-align: center;
 
     font-family: 'RobotoLight';
 `

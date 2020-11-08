@@ -36,4 +36,8 @@ const iconsCSS= css`
   color: black;
 `
 
+export const EyeIconContainer = styled.TouchableOpacity`
+  margin-right: 15;
+`
+
 export const InputIcons = styled(MaterialIcons)`${iconsCSS}`
