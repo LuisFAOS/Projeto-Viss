@@ -20,6 +20,13 @@ export const Label = styled.Text`
     margin: 4px 0px 10px;
 `
 
+export const ProfileImageWrapper = styled.View`
+    width: 120px;
+    height: 120px;
+
+    background-color: black;
+`
+
 export const FuncsTitle = styled.Text`
     color: gray;
     font-size: 18px;

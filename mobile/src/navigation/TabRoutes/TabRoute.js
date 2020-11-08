@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RegisterBO from '../../screens/registerBO/registerBO'
+import RegisterBO from '../../screens/registerBO/RegisterBO'
 /*import ConsultRegion from '../../screens/ConsultRegion/ConsultRegion'
 import TraceRoute from '../../screens/TraceRoute/TraceRoute' */
 

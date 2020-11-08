@@ -8,18 +8,46 @@ import {
     DrawerItemStyled,
     DrawerSection,
     DrawerContentScrollViewS,
-    FuncsTitle
+    FuncsTitle,
+    ProfileImageWrapper
 } from './styles'
 
 import { DrawerContentScrollView } from '@react-navigation/drawer'
+import baseURL from '../../../baseURL';
+import { Image } from 'react-native';
 
 const MyDrawer = ({AuthDatas, navigation}) => {
 
+    const [profileImage, setProfileImage] = React.useState({uri:'',img:''})
 
+    const LoadProfileImage = async () => {
+        try {
+            const response = await fetch(`${baseURL}user`, {
+                method: 'GET',
+                headers: {authorization: AuthDatas.token}
+            })
+    
+            const responseData = await response.json()
+            setProfileImage({uri:'data:image/jpg;base64,'+responseData.img.base64,img:responseData.img})
+            
+            return () => console.log(profileImage);
+
+        } catch (e) {
+            return () => console.log("ERRO!"+e);
+        }
+
+    }
+
+    React.useEffect(() => {
+        LoadProfileImage()
+    },[])
+    
     return (  
         <DrawerContentScrollViewS>
             <Wrapper source={require('../../../assets/drawer-background.jpg')}>
-                <FontAwesome name="user-circle-o" size={90} color="white" />                
+                <ProfileImageWrapper>
+                    <Image source={{uri:"data:image/jpg;base64,YmVhNThjMGZjZTY0MDNjYjQ1ZWQtYWUwYzVhZTAtNWRhMi00YzlmLTkyNjMtNWMxZjI5NjdlN2VlLmpwZw==ZWJkMzg2ODU5NjVhMmZmZDk3MDQtbWF4cmVzZGVmYXVsdC5qcGc="}} style={{height: 100, width: 100 }}/>              
+                </ProfileImageWrapper>
                 <Label>{AuthDatas.user.name}</Label>
             </Wrapper>
             <FuncsTitle>Perfil</FuncsTitle>
