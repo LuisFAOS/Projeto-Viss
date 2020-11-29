@@ -23,8 +23,6 @@ export const Label = styled.Text`
 export const ProfileImageWrapper = styled.View`
     width: 120px;
     height: 120px;
-
-    background-color: black;
 `
 
 export const FuncsTitle = styled.Text`

@@ -2,15 +2,23 @@ import React from 'react';
 
 import Login from '../../screens/Login/Login'
 import SingUp from '../../screens/SignUp/SingUp'
-import AppStackRoute from './AppStackRoute'
+import AppStackRoute from './AppStackRoutes'
 
-import { createStackNavigator } from '@react-navigation/stack'
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack'
+import AsyncStorage from '@react-native-community/async-storage';
+import ForgotPassword from '../../screens/ForgotPassword/ForgotPassword';
 
 const STACK = createStackNavigator();
 
-const LoginStackRoutes = () =>{
+const LoginStackRoutes = () => {
+
     return(
-        <STACK.Navigator>
+        <STACK.Navigator
+            screenOptions={{
+                animationEnabled: true,
+                gestureDirection: "vertical",
+            }}
+        >
             <STACK.Screen 
                 name='Login' 
                 component={Login} 
@@ -21,8 +29,8 @@ const LoginStackRoutes = () =>{
                 }
                 />
             <STACK.Screen 
-                name='Aplicação'
-                component={AppStackRoute} 
+                name='SingUp'
+                component={SingUp} 
                 options={
                     { 
                         headerShown: false
@@ -30,8 +38,8 @@ const LoginStackRoutes = () =>{
                 }
                 />
             <STACK.Screen 
-                name='SingUp'
-                component={SingUp} 
+                name='ForgotPassword'
+                component={ForgotPassword} 
                 options={
                     { 
                         headerShown: false
