@@ -18,6 +18,10 @@ export const InputContainer = styled.View`
         border: 1px solid gray;
     `}
 
+    ${props => props.isExistError && css`
+        border: 1px solid #DC3545;
+    `}
+
     ${props => props.isTextArea && css`
         height: 150px;
         padding-top: 15px;
@@ -58,16 +62,19 @@ export const InputLabel = styled.Text`
     width: 95.5%;
     line-height: 40px;
 
+    background-color: white;
+    color: gray;
+
+    font-family: 'RobotoLight';
+    font-size: 18px; 
+
     ${props => props.onFocused && css`
-        top: -10px;
-        line-height: 20;
+        top: -9px;
+        line-height: 18;
 
         width: auto;
         height: auto;
+        color: gray;
     `}
 
-    background-color: white;
-
-    font-family: 'RobotoLight';
-    font-size: 20px; 
 `

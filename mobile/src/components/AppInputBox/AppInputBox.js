@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import HideKeyboardContext from '../../context/hideTabContext';
 
 import { 
     InputContainer,
@@ -12,7 +13,7 @@ import {
     const [isFocused, setIsFocused] = React.useState(false)
 
     const PropsValueIsNull = () => {
-        setIsFocused(props.multiline || props.value.length > 0)
+        setIsFocused(props.multiline || props.value.length > 0 || props.openInput)
     }
 
     React.useEffect(()=>{
@@ -22,24 +23,30 @@ import {
 
     const refInput = React.useRef(null)
 
+
   return (
         <InputContainer 
             isTextArea={props.multiline}
             onFocused={isFocused}
+            isExistError={props.isExistError}
         >
             <Input 
                 ref={refInput}
+
+                style={props.multiline && {textAlignVertical: 'top'}}
                 
                 autoCapitalize="none" 
 
                 onChangeText={() => {
                     props.onChangeText()
                     setIsFocused(props.value && true)
-                    console.log(props.value)
                 }}
+
+
                 value={props.value}
 
                 onBlur= {() => setIsFocused(props.multiline || (!isFocused || props.value) || false)}
+                
                 {...props}
                 />
 
