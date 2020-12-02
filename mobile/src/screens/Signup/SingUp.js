@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { 
     TouchableWithoutFeedback, 
@@ -21,6 +21,7 @@ import * as ImagePicker from 'expo-image-picker'
 import baseURL from '../../baseURL';
 import DefaultProfileImg from '../../assets/userImgs/default-user-img2.png'
 import AlertModal from '../../components/AlertModal/AlertModal';
+import AuthContext from '../../context/context'
 
 export default function SingUp({navigation}){
 
@@ -28,6 +29,9 @@ export default function SingUp({navigation}){
         alertTxt: '',
         isLoading:false,
     })
+
+    const {singIn} = useContext(AuthContext)
+
 
     const [activePage, setActivePage] = useState({
         Page: {
@@ -151,13 +155,13 @@ export default function SingUp({navigation}){
                 responseData = await response.text()
 
                 setAlert({
-                    alertTxt: responseData,
+                    alertTxt: responseData.includes('CEP') ? 'CEP inválido!':responseData,
                     isLoading: false
                 })
 
             }else{
                 var AuthDatas = await response.json() 
-                navigation.navigate('Aplicação', {AuthDatas}) 
+                singIn(AuthDatas)
             }
             
         } catch (e) {
@@ -188,14 +192,14 @@ export default function SingUp({navigation}){
                         :
                     ChangePageHandler()}>  
                     <ArrowIcon 
-                        name='arrow-back'
+                        name='keyboard-arrow-left'
                         size={40}
                     />
                     <HeaderTitle>
                         {activePage.id === 'first' ? 'Login':'Página anterior'}
                     </HeaderTitle>
                 </ChangePageButton>
-                <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <ScrollView>
                         <SplitPage 
                             imageUri={imageUri && imageUri.uri}
@@ -217,7 +221,7 @@ export default function SingUp({navigation}){
                                <Button onPress={ChangePageHandler}>
                                     <ButtonText>PRÓXIMO</ButtonText>
                                     <ArrowIcon 
-                                        name='arrow-forward'
+                                        name='keyboard-arrow-right'
                                         size={30}
                                     />
                                 </Button>

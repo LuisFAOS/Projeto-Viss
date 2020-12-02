@@ -1,5 +1,6 @@
 import styled,{ css } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient'
+import { Dimensions, Animated } from 'react-native';
 
 
 export const Container = styled(LinearGradient)`
@@ -8,19 +9,24 @@ export const Container = styled(LinearGradient)`
   z-index: 0;
 `
 
-export const Logo = styled.Image`
-  width: 180;
-  height: 180;
+export const Logo = styled(Animated.Image)`
+  width: 170px;
+  height: 170px;
   align-self: center;
-  margin-top: 100;
-  margin-bottom: 60;
+  ${props => props.isKeyboardOpen ? css`
+      margin: 0px;
+  `:css`
+      margin-top: 100px; 
+      margin-bottom: 60px; 
+  `};
+
 `
 
 export const Button = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
 
-  height: 40;
+  height: 40px;
   margin: 10px 50px;
 
   background-color: #41BD1B;

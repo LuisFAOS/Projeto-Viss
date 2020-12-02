@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 
-import DefaultProfileImg from '../../../assets/userImgs/default-user-img2.png'
+import DefaultProfileImg from '../../../assets/userImgs/default-user-img1.png'
 import InputBox from '../../../components/InputBox/InputBox'
 import PasswordInput from '../../../components/PasswordInput/PasswordInput';
+import HideKeyboardContext from '../../../context/hideTabContext';
 
 import {
     Head,
@@ -14,12 +15,34 @@ import {
 
 export default function SplitPage(props){
     
+    const {isKeyboardOpen, image} = useContext(HideKeyboardContext)
+
     return(
         <>
             <Head>
-                {props.imageUri ? <Logo source={{uri:props.imageUri}}/> : <Logo source={DefaultProfileImg}/>}
-                <ChoosePictureContainer onPress={props.selectPicture}>
-                    <ChoosePictureText>
+                {props.imageUri ?   
+                    <Logo 
+                        isKeyboardOpen={isKeyboardOpen}
+                        style={{
+                            transform: [{ scale: image }]
+                        }}
+                        source={{uri:props.imageUri}} 
+                    /> 
+                    : 
+                    <Logo 
+                        isKeyboardOpen={isKeyboardOpen}
+                        style={{
+                            transform: [{ scale: image }]
+                        }}
+                        source={DefaultProfileImg}
+                    />}
+                <ChoosePictureContainer 
+                    onPress={props.selectPicture} 
+                    style={{
+                        transform: [{ scale: image }]
+                    }}
+                    isKeyboardOpen={isKeyboardOpen}>
+                    <ChoosePictureText isKeyboardOpen={isKeyboardOpen}>
                         {props.imageUri ? "Trocar imagem": "Escolher imagem"}
                     </ChoosePictureText>  
                 </ChoosePictureContainer>
@@ -29,8 +52,9 @@ export default function SplitPage(props){
             </Head>
 
             <InputBox 
-                placeholder={props.firstInputPlaceholder} 
                 onChange={props.firstInputChangeHandler}
+
+                placeholder={props.firstInputPlaceholder}
                 value={props.firstInputValue}
                 iconName={props.firstIconName} 
                 size={35}/>
@@ -39,12 +63,14 @@ export default function SplitPage(props){
                     <PasswordInput placeholder={props.secondInputPlaceholder} 
                         value={props.secondInputValue}
                         iconName={props.secondIconName}
+
                         onChange={props.secondInputChangeHandler}
                         size={35}
                     />
                 :   <InputBox placeholder={props.secondInputPlaceholder} 
                         value={props.secondInputValue}
                         iconName={props.secondIconName}
+
                         onChange={props.secondInputChangeHandler}
                         size={35}/>
                 }
