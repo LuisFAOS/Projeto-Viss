@@ -20,48 +20,31 @@ function Profile({route, navigation}) {
 
 
   const [InputValues, setInputValues] = useState({
-    nome: {
-      value: '',
-      isFocused: false
-    },
-    CEP: {
-      value: '',
-      isFocused: false
-    },
-    email: {
-      value: '',
-      isFocused: false
-    }
+    nome: '',
+    CEP: '',
+    email:'',
+    base64ProfileImg:'',
   })
 
   const getUserDatas = async () => {
     try {
       const response = await fetch(baseURL+'user', {
-          method: 'GET',
-          headers: {authorization: route.params.AuthDatas.token}
+        method: 'GET',
+        headers: {authorization: route.params.authDatas.token}
       })
       
       const UserDatas = await response.json();
-
+      
       setInputValues({
-        nome: {
-          value: UserDatas.nome,
-          isFocused: true
-        },
-        CEP: {
-          value: UserDatas.CEP,
-          isFocused: true
-        },
-        email: {
-          value: UserDatas.email,
-          isFocused: true
-        }
+        nome: UserDatas.nome,
+        CEP: UserDatas.CEP,
+        email:UserDatas.email,
+        base64ProfileImg: UserDatas.img && UserDatas.img.base64,
       })
 
+
     } catch (e) {
-      return () => {
-        console.log("ERRO!"+e);
-      }
+      console.log("ERRO! "+ e);
     }
   }
 
@@ -69,29 +52,9 @@ function Profile({route, navigation}) {
     getUserDatas()
   },[])
 
-  const refInputName = useRef(null);
-  const refInputCEP = useRef(null);
-  const refInputEmail = useRef(null);
-
-
-  const FocusStateHandler = field =>{
-    const newState = {...InputValues}
-    newState[field].isFocused = newState[field].isFocused || true
-
-    setInputValues({...newState})
-  }
-
-  const BlurStateHandler = field =>{
-    const newState = {...InputValues}
-    newState[field].isFocused = (!newState[field].isFocused || newState[field].value) || false
-    
-    setInputValues({...newState})
-
-  }
-
   const StateValueHandler = (field, value) => {
     const newState = {...InputValues}
-    newState[field].value = value.trim()
+    newState[field] = value
 
     setInputValues({...newState})
   }
@@ -102,35 +65,42 @@ function Profile({route, navigation}) {
       <Wrapper onPress={()=> Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior='position'>
           <Circle>
-            <Avatar source={require('../../../assets/userImgs/default-user-img1.png')}/>
+            {InputValues.base64ProfileImg ?
+              <Avatar source={{uri:"data:image/jpeg;base64, "+InputValues.base64ProfileImg}}/>
+              :
+              <Avatar source={require('../../../assets/userImgs/default-user-img3.png')}/>
+            }
           </Circle>
           <Title>
             Editar Dados
           </Title>
           <AppInputBox
             onChangeText={nome => StateValueHandler("nome", nome)}
-            value={InputValues.nome.value}
+            value={InputValues.nome}
             labelText="Nome"
+            openInput
           />
 
           <AppInputBox
             onChangeText={CEP => StateValueHandler("CEP", CEP)}
-            value={InputValues.CEP.value}
+            value={InputValues.CEP}
 
             labelText="CEP"
+            openInput
           />
 
           <AppInputBox
 
             onChangeText={email => StateValueHandler("email", email)}
-            value={InputValues.email.value}
+            value={InputValues.email}
 
             labelText="Email"
+            openInput
           />
 
           <ButtonContainer>
             <Button>
-              <ButtonText >
+              <ButtonText>
                 Editar
               </ButtonText>
             </Button>
