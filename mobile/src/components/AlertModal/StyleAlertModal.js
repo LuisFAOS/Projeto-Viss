@@ -1,3 +1,4 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 export const CloseAlertIconWrapper = styled.View`
@@ -8,11 +9,10 @@ export const CloseAlertIconWrapper = styled.View`
 
 export const BackdropWrapper = styled.View`
     position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
+    width: ${Dimensions.get('screen').width};
+    height: ${Dimensions.get('screen').height};
+    z-index: 999;
 
-    display: flex;
     align-items: center;
     justify-content: center;
 
