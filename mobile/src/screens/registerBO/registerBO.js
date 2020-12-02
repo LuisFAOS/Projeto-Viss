@@ -201,7 +201,7 @@ function RegisterBO({navigation}) {
               setShowCalendar(false)
               Keyboard.dismiss()  
             }}>{
-              !isSuccess ? 
+              isSuccess ? 
               <View style={{height: '100%'}}>
                 <Header 
                     navigation={navigation} 
