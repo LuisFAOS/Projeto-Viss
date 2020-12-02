@@ -82,7 +82,7 @@ function SecondPage(props) {
                 <CalendarBlock
                     dateService={localeDateService}
                     placeholder="Selecione a data"
-                    min={new Date(new Date().getFullYear(), new Date().getMonth()-10, 1)}
+                    min={new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()-10)}
                     max={new Date()}
                     date={props.data_ocorrido}
                     onSelect={nextDate => {

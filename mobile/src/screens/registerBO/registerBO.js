@@ -201,7 +201,7 @@ function RegisterBO({navigation}) {
               setShowCalendar(false)
               Keyboard.dismiss()  
             }}>{
-              isSuccess ? 
+              !isSuccess ? 
               <View style={{height: '100%'}}>
                 <Header 
                     navigation={navigation} 
@@ -261,7 +261,10 @@ function RegisterBO({navigation}) {
                                   setIsKeyboardOpen(false)
                                   setShowModal(false)
                                 }}
-                                onSubmit = {SubmitDatas}
+                                onSubmit = {() => {
+                                  SubmitDatas()
+                                  setIsKeyboardOpen(false)
+                                }}
                                 />
             }
         </KeyboardAvoidingView>
